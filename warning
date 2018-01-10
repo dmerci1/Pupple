@@ -1,0 +1,8 @@
+if ( email === "" && password === "") {
+  this.setState({ error: 'Missing e-mail and password '})
+} else if ( email !== "" && password === "") {
+  this.setState({ error: 'must enter password '})
+}
+  else if ( email === "" && password !== "") {
+  this.setState({ error: 'must enter e-mail '})
+} else {

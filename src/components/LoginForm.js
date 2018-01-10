@@ -1,9 +1,49 @@
 import React, { Component } from 'react';
+import { Text } from 'react-native';
+import firebase from 'firebase';
 import { Button } from 'react-native-elements';
-import { Card, CardSection, Input } from '../reusables';
+import { Card, CardSection, Input, Spinner } from '../reusables';
 
 class LoginForm extends Component {
-  state = { email: '', password: '' };
+  state = { email: '', password: '', error: '', loading: false };
+
+  onButtonPress() {
+    const { email, password } = this.state;
+
+    this.setState({ error: '', loading: true });
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(this.onLoginSuccess.bind(this))
+      .catch(() => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(this.onLoginSuccess.bind(this))
+          .catch(this.onLoginFail.bind(this));
+            this.setState({ error: 'Authentication Failed'})
+          });
+      }
+
+      onLoginFail() {
+        this.setState({ error: 'Authentication Failed', loading: false });
+      }
+      onLoginSuccess() {
+        this.setState({
+          email: '',
+          password: '',
+          loading: false,
+          error: ''
+        })
+      }
+      renderButton() {
+        if (this.state.loading) {
+          return <Spinner size="small" />
+        }
+          return (
+            <Button
+            onPress={this.onButtonPress.bind(this)}
+            large
+            title="Sign In"
+            buttonStyle={styles.buttonStyle} />
+          );
+      }
   render() {
     return (
       <Card>
@@ -27,9 +67,12 @@ class LoginForm extends Component {
             underlineColorAndroid={'transparent'}
           />
         </CardSection>
-        
+
+        <Text style={styles.errorText}>
+          {this.state.error}
+        </Text>
         <CardSection>
-          <Button large title="Log In" buttonStyle={styles.buttonStyle} />
+          {this.renderButton()}
         </CardSection>
       </Card>
     );
@@ -43,6 +86,11 @@ class LoginForm extends Component {
       flex: 1,
       width: 200,
       alignSelf: 'stretch',
+    },
+    errorText: {
+      fontSize: 20,
+      alignSelf: 'center',
+      color: 'red'
     }
   };
 
