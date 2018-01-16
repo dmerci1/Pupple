@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, Linking } from 'react-native';
 import firebase from 'firebase';
 import { Button } from 'react-native-elements';
-import { Card, CardSection, Input, Spinner } from '../reusables';
+import { Card, CardSection, Input, Spinner } from '../components/reusables';
 
-class LoginForm extends Component {
+class LoginScreen extends Component {
   state = { email: '', password: '', error: '', loading: false };
 
   onButtonPress() {
     const { email, password } = this.state;
 
     this.setState({ error: '', loading: true });
+
+    if ( email === "" && password === "") {
+      this.setState({ error: 'Missing e-mail and password ', loading: false })
+    } else if ( email !== "" && password === "") {
+      this.setState({ error: 'must enter password ', loading: false })
+    }
+      else if ( email === "" && password !== "") {
+      this.setState({ error: 'must enter e-mail', loading: false })
+    } else {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(this.onLoginSuccess.bind(this))
-      .catch(() => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(this.onLoginSuccess.bind(this))
-          .catch(this.onLoginFail.bind(this));
-            this.setState({ error: 'Authentication Failed'})
-          });
+        .catch(this.onLoginFail.bind(this));
       }
-
+    }
       onLoginFail() {
         this.setState({ error: 'Authentication Failed', loading: false });
       }
@@ -44,6 +48,7 @@ class LoginForm extends Component {
             buttonStyle={styles.buttonStyle} />
           );
       }
+
   render() {
     return (
       <Card>
@@ -74,7 +79,9 @@ class LoginForm extends Component {
         <CardSection>
           {this.renderButton()}
         </CardSection>
+        
       </Card>
+
     );
   }
 }
@@ -95,4 +102,4 @@ class LoginForm extends Component {
   };
 
 
-export default LoginForm;
+export default LoginScreen;
