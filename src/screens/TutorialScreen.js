@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
 
@@ -16,7 +16,7 @@ class TutorialScreen extends Component {
   state = { token: null }
 
   async componentWillMount() {
-    let token = await AsyncStorage.getItem('fb_token');
+    const token = await AsyncStorage.getItem('fb_token');
 
     if (token) {
       this.props.navigation.navigate('map');

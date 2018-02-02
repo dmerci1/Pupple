@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
-import LoginScreen from './LoginScreen';
-import ReviewScreen from './ReviewScreen';
-import { Spinner } from '../components/reusables';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Text,  View, StyleSheet } from 'react-native';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon } from 'native-base';
 import firebase from 'firebase';
 
 class SwipeScreen extends Component {
 
   render() {
-
     return (
-      <View>
-        <Text>Swipe Screen</Text>
-          <Button onPress={() => firebase.auth().signOut()} title="Log Out" />
+      <Container>
+        <Header>
+          <Left>
+            <Button
+            transparent
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+            >
+              <Icon name='menu' />
+            </Button>
+         </Left>
+        </Header>
+        <Content>
+            <Text>Swipe Screen</Text>
+              <Button
+              block danger
+              onPress={() => firebase.auth().signOut()}
+              >
+            <Text>Log Out</Text></Button>
 
-      </View>
+            </Content>
+      </Container>
     );
   }
 }
-
-
 
 export default SwipeScreen;

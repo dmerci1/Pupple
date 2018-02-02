@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Linking } from 'react-native';
+import { Text } from 'react-native';
 import firebase from 'firebase';
 import { Button } from 'react-native-elements';
 import { Card, CardSection, Input, Spinner } from '../components/reusables';
@@ -12,21 +12,22 @@ class RegisterScreen extends Component {
 
     this.setState({ error: '', loading: true });
 
-    if ( email === "" && password === "") {
-      this.setState({ error: 'Missing e-mail and password ', loading: false })
-    } else if ( email !== "" && password === "") {
-      this.setState({ error: 'must enter password ', loading: false })
+    if (email === '' && password === '') {
+      this.setState({ error: 'Missing e-mail and password ', loading: false });
+    } else if (email !== '' && password === '') {
+      this.setState({ error: 'must enter password ', loading: false });
     }
-      else if ( email === "" && password !== "") {
-      this.setState({ error: 'must enter e-mail', loading: false })
-    } else if ( password !== password2) {
-      this.setState({ error: 'passwords dont match', loading: false })
+      else if (email === '' && password !== '') {
+      this.setState({ error: 'must enter e-mail', loading: false });
+    } else if (password !== password2) {
+      this.setState({ error: 'passwords dont match', loading: false });
     }
       else {
        firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(this.onLoginSuccess.bind(this))
           .catch(this.onLoginFail.bind(this));
       }
+
     }
       onLoginFail() {
         this.setState({ error: 'Authentication Failed', loading: false });
@@ -35,24 +36,27 @@ class RegisterScreen extends Component {
         this.setState({
           email: '',
           password: '',
+          password2: '',
           loading: false,
           error: ''
-        })
-        this.props.navigation.navigate('tutorial');
+        });
       }
+
       renderButton() {
         if (this.state.loading) {
-          return <Spinner size="small" />
+          return <Spinner size="small" />;
         }
           return (
             <Button
             onPress={this.onButtonPress.bind(this)}
             large
             title="Register"
-            buttonStyle={styles.buttonStyle} />
+            buttonStyle={styles.buttonStyle}
+            />
           );
       }
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <Card>
         <CardSection>
@@ -94,10 +98,11 @@ class RegisterScreen extends Component {
         </CardSection>
         <CardSection>
           <Button
-          onPress={() => this.props.navigation.navigate('auth')}
+          onPress={() => navigate('login')}
           large
           title="Back to Sign In"
-          buttonStyle={styles.buttonStyle} />
+          buttonStyle={styles.buttonStyle}
+          />
         </CardSection>
       </Card>
     );
@@ -118,6 +123,5 @@ class RegisterScreen extends Component {
       color: 'red'
     }
   };
-
 
 export default RegisterScreen;
