@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import HomeNavigator from '../components/navigators/MainNavigator';
+import HomeNav from '../components/navigators/HomeNav';
 
-class HomeScreen extends Component {
+class Home extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <HomeNavigator />
+        <HomeNav />
       </View>
     );
    }
@@ -21,4 +21,4 @@ class HomeScreen extends Component {
       },
     });
 
-export default HomeScreen;
+export default Home;
