@@ -9,7 +9,6 @@ class AddDog extends Component {
     const { name, breed, gender, age, bio } = this.props;
 
     this.props.dogAdd({ name, breed, gender, age, bio });
-    this.props.navigation.navigate('doglist');
   }
   render() {
     return (
