@@ -33,7 +33,7 @@ class SwipeScreen extends Component {
             <Text>Swipe Screen</Text>
             <Button
             block
-            onPress={() => this.props.navigation.navigate('bar')}
+            onPress={() => this.props.navigation.navigate('doglistitem')}
             >
             <Text>Add Dog</Text>
             </Button>

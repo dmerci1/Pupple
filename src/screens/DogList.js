@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FlatList, Text } from 'react-native';
 import { Container, Content, Header, Button, Left, Body, List, ListItem } from 'native-base';
 import { fetchDogs } from '../actions';
-import DogListItem from '../components/DogListItem';
+import DogListItem from './DogListItem';
 
 class DogList extends Component {
   componentWillMount() {

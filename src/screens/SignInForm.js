@@ -10,7 +10,7 @@ class SignInForm extends Component {
    firebase.auth().onAuthStateChanged((user) => {
      if (user) {
        this.setState({ loggedIn: true });
-       this.props.navigation.navigate('home');
+       this.props.navigation.navigate('swipe');
      } else {
        this.setState({ loggedIn: false });
        this.props.navigation.navigate('signIn');

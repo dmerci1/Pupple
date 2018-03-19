@@ -5,7 +5,7 @@ import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 import reducers from './reducers';
 import SignInForm from './screens/SignInForm';
-import AuthNav from './components/navigators/AuthNav';
+import MainNav from './components/Navigator';
 
 class App extends Component {
   componentWillMount() {
@@ -24,7 +24,7 @@ class App extends Component {
       const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
-          <AuthNav />
+          <MainNav />
       </Provider>
     );
   }
