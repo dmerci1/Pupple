@@ -1,5 +1,7 @@
 import React from 'react';
-import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import { addNavigationHelpers, TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import { createStore, combineReducers } from 'redux';
+import { connect } from 'react-redux';
 import SignInForm from '../screens/SignInForm';
 import SignUpForm from '../screens/SignUpForm';
 import SwipeScreen from '../screens/SwipeScreen';
@@ -44,7 +46,7 @@ const StackNav = StackNavigator({
   headerMode: 'none'
 }
 );
-const MainNav = TabNavigator({
+export const Navigator = TabNavigator({
 auth: { screen: AuthNav },
 menu: { screen: MenuNav },
 stack: { screen: StackNav }
@@ -56,7 +58,19 @@ stack: { screen: StackNav }
   lazy: true,
   swipeEnabled: false,
   animationEnabled: false,
+}, {
+initialRouteName: 'auth',
 }
 );
 
-export default MainNav;
+const AppWithNavigationState = ({ dispatch, nav }) => (
+  <Navigator
+    navigation={addNavigationHelpers({ dispatch, state: nav })}
+  />
+);
+
+const mapStateToProps = state => ({
+  nav: state.nav,
+});
+
+export default connect(mapStateToProps)(AppWithNavigationState);

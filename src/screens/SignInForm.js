@@ -10,10 +10,10 @@ class SignInForm extends Component {
    firebase.auth().onAuthStateChanged((user) => {
      if (user) {
        this.setState({ loggedIn: true });
-       this.props.navigation.navigate('swipe');
+       this.props.navigation.navigate('menu');
      } else {
        this.setState({ loggedIn: false });
-       this.props.navigation.navigate('signIn');
+       this.props.navigation.navigate('auth');
      }
    });
   }
@@ -99,7 +99,8 @@ const mapStateToProps = state => {
     email: state.auth.email,
     password: state.auth.password,
     error: state.auth.error,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    user: state.auth.user
   };
 };
 

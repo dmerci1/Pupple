@@ -5,10 +5,11 @@
     "expo": "^25.0.0",
     "firebase": "^4.10.1",
     "lodash": "^4.17.5",
-    "native-base": "^2.3.9",
+    "native-base": "^2.3.10",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
-    "react-navigation": "^1.4.0",
+    "react-navigation": "v1.0.0-beta.26",
+    "react-navigation-redux-helpers": "^1.0.3",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
