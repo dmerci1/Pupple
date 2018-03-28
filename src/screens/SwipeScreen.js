@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text,  View, StyleSheet } from 'react-native';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Drawer } from 'native-base';
-
+import NavigationService from '../components/NavigationService';
 
 class SwipeScreen extends Component {
   componentWillMount() {
@@ -33,7 +33,7 @@ class SwipeScreen extends Component {
             <Text>Swipe Screen</Text>
             <Button
             block
-            onPress={() => this.props.navigation.navigate('doglistitem')}
+            onPress={() => NavigationService.navigate('profile')}
             >
             <Text>Add Dog</Text>
             </Button>

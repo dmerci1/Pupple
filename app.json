@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "colors",
+    "name": "Pupple",
     "description": "This project is really great.",
-    "slug": "colors",
+    "slug": "Pupple",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],

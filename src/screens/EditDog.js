@@ -1,15 +1,21 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
 import { Container, Content, Header, Button, Left } from 'native-base';
-import { dogInfo, dogAdd } from '../actions';
 import DogForm from '../components/DogForm';
+import { dogInfo, dogSave } from '../actions';
 
-class AddDog extends Component {
+class EditDog extends Component {
+  componentWillMount() {
+    _.each(this.props.dog, (value, prop) => {
+      this.props.dogInfo({ prop, value });
+    });
+  }
   onButtonPress() {
     const { name, breed, gender, age, bio } = this.props;
-
-    this.props.dogAdd({ name, breed, gender, age, bio });
+    console.log(dogInfo);
+    this.props.dogSave({ name, breed, gender, age, bio, uid: this.props.dog.uid });
   }
   render() {
     return (
@@ -20,7 +26,7 @@ class AddDog extends Component {
             block
             onPress={() => this.props.navigation.navigate('doglist')}
             >
-              <Text>Back to Dog List</Text>
+              <Text>Back To Dog List</Text>
             </Button>
           </Left>
         </Header>
@@ -30,7 +36,7 @@ class AddDog extends Component {
            block info
            onPress={this.onButtonPress.bind(this)}
           >
-            <Text>Add Dog</Text>
+            <Text>Save</Text>
           </Button>
         </Content>
       </Container>
@@ -44,4 +50,4 @@ const mapStateToProps = (state) => {
   return { name, breed, gender, age, bio };
 };
 
-export default connect(mapStateToProps, { dogInfo, dogAdd })(AddDog);
+export default connect(mapStateToProps, { dogInfo, dogSave })(EditDog);

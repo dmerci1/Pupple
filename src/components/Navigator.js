@@ -1,5 +1,8 @@
 import React from 'react';
-import { addNavigationHelpers, TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import { addNavigationHelpers,
+         TabNavigator,
+         StackNavigator,
+         DrawerNavigator } from 'react-navigation';
 import { createStore, combineReducers } from 'redux';
 import { connect } from 'react-redux';
 import SignInForm from '../screens/SignInForm';
@@ -9,9 +12,25 @@ import Profile from '../screens/Profile';
 import DogList from '../screens/DogList';
 import DogListItem from '../screens/DogListItem';
 import AddDog from '../screens/AddDog';
+import EditDog from '../screens/EditDog';
 import Settings from '../screens/Settings';
 import Matches from '../screens/Matches';
+import other from '../screens/other';
 import SideBar from './SideBar';
+
+const New = TabNavigator({
+other: { screen: other },
+
+}, {
+  navigationOptions: {
+    tabBarVisible: false
+  },
+  tabBarPosition: 'bottom',
+  lazy: true,
+  swipeEnabled: false,
+  animationEnabled: false,
+}
+);
 
 const AuthNav = TabNavigator({
 signIn: { screen: SignInForm },
@@ -31,7 +50,6 @@ const MenuNav = DrawerNavigator({
   swipe: { screen: SwipeScreen },
   profile: { screen: Profile },
   doglist: { screen: DogList },
-  newdog: { screen: AddDog },
   doglistitem: { screen: DogListItem },
   settings: { screen: Settings },
 }, {
@@ -41,15 +59,18 @@ const MenuNav = DrawerNavigator({
 });
 const StackNav = StackNavigator({
   matches: { screen: Matches },
-
+  newdog: { screen: AddDog },
+  editdog: { screen: EditDog }
 }, {
   headerMode: 'none'
 }
 );
+
 export const Navigator = TabNavigator({
 auth: { screen: AuthNav },
 menu: { screen: MenuNav },
-stack: { screen: StackNav }
+stack: { screen: StackNav },
+
 }, {
   navigationOptions: {
     tabBarVisible: false
