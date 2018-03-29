@@ -1,27 +1,28 @@
 import firebase from 'firebase';
 import {
-  DOG_INFO,
-  ERASE_FORM,
+  DOG_UPDATE,
+  DOG_CREATE,
   DOGS_FETCH_SUCCESS,
   DOG_SAVE_SUCCESS,
+  DOG_FORM_RESET
 
 } from './types';
 
-export const dogInfo = ({ prop, value }) => {
+export const dogUpdate = ({ prop, value }) => {
   return {
-    type: DOG_INFO,
+    type: DOG_UPDATE,
     payload: { prop, value }
   };
 };
 
-export const dogAdd = ({ name, breed, gender, age, bio }) => {
+export const dogCreate = ({ name, breed, gender, age, bio }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/dogs`)
     .push({ name, breed, gender, age, bio })
     .then(() => {
-      dispatch({ type: ERASE_FORM });
+      dispatch({ type: DOG_CREATE });
   });
   };
 };

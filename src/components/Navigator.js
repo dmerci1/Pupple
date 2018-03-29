@@ -15,22 +15,7 @@ import AddDog from '../screens/AddDog';
 import EditDog from '../screens/EditDog';
 import Settings from '../screens/Settings';
 import Matches from '../screens/Matches';
-import other from '../screens/other';
 import SideBar from './SideBar';
-
-const New = TabNavigator({
-other: { screen: other },
-
-}, {
-  navigationOptions: {
-    tabBarVisible: false
-  },
-  tabBarPosition: 'bottom',
-  lazy: true,
-  swipeEnabled: false,
-  animationEnabled: false,
-}
-);
 
 const AuthNav = TabNavigator({
 signIn: { screen: SignInForm },
@@ -52,6 +37,7 @@ const MenuNav = DrawerNavigator({
   doglist: { screen: DogList },
   doglistitem: { screen: DogListItem },
   settings: { screen: Settings },
+    editdog: { screen: EditDog }
 }, {
   contentComponent: props => <SideBar {...props} />
 }, {
@@ -60,7 +46,7 @@ const MenuNav = DrawerNavigator({
 const StackNav = StackNavigator({
   matches: { screen: Matches },
   newdog: { screen: AddDog },
-  editdog: { screen: EditDog }
+  //editdog: { screen: EditDog }
 }, {
   headerMode: 'none'
 }

@@ -1,6 +1,7 @@
 import {
-  DOG_INFO,
-  ERASE_FORM
+  DOG_UPDATE,
+  DOG_CREATE,
+  DOG_FORM_RESET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,10 +14,10 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case DOG_INFO:
+    case DOG_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
-    case ERASE_FORM:
-      return INITIAL_STATE;
+    case DOG_CREATE:
+      return { ...state, ...INITIAL_STATE };
     default:
       return state;
   }

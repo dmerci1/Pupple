@@ -1,22 +1,29 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, Text, TouchableHighlight } from 'react-native';
-import { Container, Content, Header, Button, Left, Body, List, ListItem } from 'native-base';
+import { FlatList, Text } from 'react-native';
+import { Container, Content, Header, Button, Left, Body } from 'native-base';
 import { fetchDogs } from '../actions';
 import DogListItem from './DogListItem';
 
 class DogList extends Component {
+
+  constructor(props) {
+  super(props);
+  this.renderRow = this.renderRow.bind(this);
+}
   componentWillMount() {
-    this.createDataSource();
+    this.props.fetchDogs();
   }
 
-createDataSource() {
-    this.props.fetchDogs();
+  renderRow({ item }) {
+    return (
+     <DogListItem dog={item} navigation={this.props.navigation} />
+   );
 }
+
   render() {
-    const { params } = this.props.navigation.state;
-    const itemId = params ? params.itemId : null;
+    console.log(this.props);
     return (
       <Container>
           <Header style={{ height: 80 }}>
@@ -35,13 +42,7 @@ createDataSource() {
           <Content>
             <FlatList
               data={this.props.dogs}
-              renderItem={
-                ({ item }) => <ListItem onPress={() => this.props.navigation.navigate('editdog', {
-                  itemId: item.uid,
-        })}>
-                  <Text>{ item.name }</Text>
-                  </ListItem>
-                }
+              renderItem={this.renderRow}
               keyExtractor={dog => dog.uid}
             />
             <Button

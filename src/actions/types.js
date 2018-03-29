@@ -11,7 +11,7 @@ export const CREATE_USER_FAIL = 'create_user_fail';
 export const CREATE_USER = 'create_user';
 
 //Dog Action Types
-export const DOG_INFO = 'dog_info';
-export const ERASE_FORM = 'erase_form';
+export const DOG_UPDATE = 'dog_update';
+export const DOG_CREATE = 'dog_create';
 export const DOGS_FETCH_SUCCESS = 'dogs_fetch_success';
 export const DOG_SAVE_SUCCESS = 'dog_save_success';
