@@ -51,6 +51,13 @@ class DogForm extends Component  {
                         onChangeText={value => this.props.dogUpdate({ prop: 'bio', value })}
                         />
                       </Item>
+                      <Item stackedLabel>
+                        <Label>Phone Number</Label>
+                          <Input
+                          value={this.props.phone}
+                          onChangeText={value => this.props.dogUpdate({ prop: 'phone', value })}
+                          />
+                        </Item>
                     </Form>
                   </Content>
                 </Container>

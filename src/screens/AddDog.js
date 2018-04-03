@@ -9,41 +9,91 @@ import { dogUpdate, dogCreate } from '../actions';
 class AddDog extends Component {
 
   onButtonPress() {
-    const { name, breed, gender, age, bio } = this.props;
+    const { name, breed, gender, age, bio, phone } = this.props;
 
-    this.props.dogCreate({ name, breed, gender, age, bio });
+    this.props.dogCreate({ name, breed, gender, age, bio, phone });
 }
   render() {
     return (
       <Container>
-        <Header style={{ height: 80 }}>
-          <Left>
-            <Button
-            block
-            onPress={() => this.props.navigation.navigate('doglist')}
-            >
-              <Text>Back to Dog List</Text>
-            </Button>
-          </Left>
-        </Header>
+      <Header style={{ height: 80 }}>
+        <Left>
+          <Button
+          block
+          onPress={() => this.props.navigation.navigate('doglist')}
+          >
+            <Text>Back to Dog List</Text>
+          </Button>
+        </Left>
+      </Header>
         <Content>
-          <DogForm {...this.props} />
-                <Button
-                block info
-                onPress={this.onButtonPress.bind(this)}
+          <Form>
+            <Item stackedLabel>
+              <Label>Name</Label>
+                <Input
+                value={this.props.name}
+                onChangeText={value => this.props.dogUpdate({ prop: 'name', value })}
+                />
+              </Item>
+              <Text>Breed</Text>
+               <Picker
+                mode="dropdown"
+                selectedValue={this.props.breed}
+                onValueChange={value => this.props.dogUpdate({ prop: 'breed', value })}
                 >
-                  <Text>Add Dog</Text>
-                </Button>
-              </Content>
-            </Container>
+                  <Item label="Labrador" value="Labrador" />
+                  <Item label="Poodle" value="Poodle" />
+                  <Item label="Doxin" value="Doxin" />
+                  <Item label="Beagle" value="Beagle" />
+                </Picker>
+                  <Text>Gender</Text>
+                   <Picker
+                    mode="dropdown"
+                    selectedValue={this.props.gender}
+                    onValueChange={value => this.props.dogUpdate({ prop: 'gender', value })}
+                    >
+                      <Item label="Male" value="Male" />
+                      <Item label="Female" value="Female" />
+                    </Picker>
+                 <Item stackedLabel>
+                    <Label>Age</Label>
+                      <Input
+                      value={this.props.age}
+                      onChangeText={value => this.props.dogUpdate({ prop: 'age', value })}
+                      />
+                    </Item>
+                    <Item stackedLabel>
+                      <Label>Bio</Label>
+                        <Input
+                        value={this.props.bio}
+                        onChangeText={value => this.props.dogUpdate({ prop: 'bio', value })}
+                        />
+                      </Item>
+                      <Item stackedLabel>
+                        <Label>Phone Number</Label>
+                          <Input
+                          value={this.props.phone}
+                          onChangeText={value => this.props.dogUpdate({ prop: 'phone', value })}
+                          />
+                        </Item>
+                    </Form>
+                    <Button
+                     block info
+                     onPress={this.onButtonPress.bind(this)}
+                     >
+                       <Text>Add Dog</Text>
+                     </Button>
+                  </Content>
+                </Container>
+
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { name, breed, gender, age, bio } = state.dogForm;
+  const { name, breed, gender, age, bio, phone } = state.dogForm;
 
-  return { name, breed, gender, age, bio };
+  return { name, breed, gender, age, bio, phone };
 };
 
 export default connect(mapStateToProps, { dogUpdate, dogCreate })(AddDog);

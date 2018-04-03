@@ -1,91 +1,67 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, View, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Text } from 'react-native';
+import Communications from 'react-native-communications';
 import { Container, Content, Header, Button, Left } from 'native-base';
 import DogForm from '../components/DogForm';
 import { dogUpdate, dogSave } from '../actions';
-import { NavigationActions } from 'react-navigation';
 
 class EditDog extends Component {
-  static navigationOptions = ({ navigation }) => ({
-      title: 'Edit Employee'
-  });
-
-  constructor(props) {
-      super(props);
-
-      this.state = {
-          showModal: false
-      };
-
-      this.onEditSubmit = this.onEditSubmit.bind(this);
-  }
-
   componentWillMount() {
-      const { navigation, dogUpdate } = this.props;
-      _.each(navigation.state.params.dog, (value, prop) => {
-          dogUpdate({ prop, value });
-      });
+    const { navigation, dogUpdate } = this.props;
+    _.each(navigation.state.params.dog, (value, prop) => {
+      this.props.dogUpdate({ prop, value });
+    });
+  }
+  onButtonPress() {
+    const { name, breed, gender, age, bio, phone, uid } = this.props;
+    console.log(dogUpdate);
+    this.props.dogSave({ name, breed, gender, age, bio, phone, uid });
   }
 
-  onEditSubmit() {
-      const { name, breed, gender, age, bio, uid, navigation } = this.props;
-      this.props
-          .dogSave({ name, breed, gender, age, bio, uid });
+  onTextPress() {
+    const { phone, name } = this.props;
+
+    Communications.text(phone, `Hello Schun, you name is ${name}`);
   }
   render() {
-      return (
-          <ScrollView>
-              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                  <View style={styles.container}>
-                      <DogForm />
-                      <View style={styles.formControl}>
-                          <Button
-                              accessibilityLabel="Update employee data"
-                              disabled={this.props.processing}
-                              loading={this.props.processing}
-                              onPress={this.onEditSubmit}
-
-                          >
-                          <Text>Update</Text>
-                          </Button>
-                          <Button
-                          block
-                          onPress={() => this.props.navigation.navigate('doglist')}
-                          >
-                            <Text>Back to Dog List</Text>
-                          </Button>
-                      </View>
-
-                  </View>
-              </TouchableWithoutFeedback>
-
-          </ScrollView>
-      );
+    return (
+      <Container>
+        <Header style={{ height: 80 }}>
+          <Left>
+            <Button
+            block
+            onPress={() => this.props.navigation.navigate('doglist')}
+            >
+              <Text>Back To Dog List</Text>
+            </Button>
+          </Left>
+        </Header>
+        <Content>
+          <DogForm {...this.props} />
+          <Button
+           block info
+           onPress={this.onButtonPress.bind(this)}
+          >
+            <Text>Update</Text>
+          </Button>
+          <Button
+           block danger
+           onPress={this.onTextPress.bind(this)}
+          >
+            <Text>Text</Text>
+          </Button>
+        </Content>
+      </Container>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { name, breed, gender, age, bio } = state.dogForm;
+  const { name, breed, gender, age, phone, bio } = state.dogForm;
 
-  return { name, breed, gender, age, bio };
+  return { name, breed, gender, age, phone, bio };
 };
 
 export default connect(mapStateToProps, { dogUpdate, dogSave })(EditDog);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 20,
-        paddingHorizontal: 20
-    },
-    formControl: {
-        marginBottom: 15
-    },
-    dialaogText: {
-        color: '#565555',
-        fontSize: 18,
-
-    }
-});

@@ -1,7 +1,7 @@
 import {
   DOG_UPDATE,
   DOG_CREATE,
-  DOG_FORM_RESET
+  DOG_SAVE_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -9,7 +9,8 @@ const INITIAL_STATE = {
   breed: '',
   gender: '',
   age: '',
-  bio: ''
+  bio: '',
+  phone: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,7 +18,9 @@ export default (state = INITIAL_STATE, action) => {
     case DOG_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
     case DOG_CREATE:
-      return { ...state, ...INITIAL_STATE };
+      return INITIAL_STATE;
+    case DOG_SAVE_SUCCESS:
+      return INITIAL_STATE;
     default:
       return state;
   }
