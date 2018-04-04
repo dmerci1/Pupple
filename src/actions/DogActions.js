@@ -48,3 +48,13 @@ export const dogSave = ({ name, breed, gender, age, bio, phone, uid }) => {
     dispatch({ type: DOG_SAVE_SUCCESS });
   };
 };
+
+
+export const dogDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`/users/${currentUser.uid}/dogs/${uid}`)
+      .remove()
+  };
+};

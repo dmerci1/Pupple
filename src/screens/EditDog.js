@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
 import Communications from 'react-native-communications';
-import { Container, Content, Header, Button, Left } from 'native-base';
+import { Container, Content, Header, Button, Left, Card, CardItem } from 'native-base';
 import DogForm from '../components/DogForm';
-import { dogUpdate, dogSave } from '../actions';
+import { ConfirmModal } from '../components/ConfirmModal';
+import { dogUpdate, dogSave, dogDelete } from '../actions';
 
 class EditDog extends Component {
+  state= { showModal: false };
+
   componentWillMount() {
     const { navigation, dogUpdate } = this.props;
     _.each(navigation.state.params.dog, (value, prop) => {
@@ -25,6 +28,16 @@ class EditDog extends Component {
 
     Communications.text(phone, `Hello Schun, you name is ${name}`);
   }
+
+onAccept() {
+  const { uid } = this.props.navigation.state.params.dog;
+
+  this.props.dogDelete({ uid, navi: this.props.navigation });
+}
+
+onDecline() {
+  this.setState({ showModal: false });
+}
   render() {
     return (
       <Container>
@@ -40,18 +53,38 @@ class EditDog extends Component {
         </Header>
         <Content>
           <DogForm {...this.props} />
+          <Card>
+          <CardItem>
           <Button
            block info
            onPress={this.onButtonPress.bind(this)}
           >
             <Text>Update</Text>
           </Button>
+          </CardItem>
+          <CardItem>
           <Button
            block danger
            onPress={this.onTextPress.bind(this)}
           >
             <Text>Text</Text>
           </Button>
+          </CardItem>
+            <CardItem>
+              <Button
+              onPress={() => this.setState({ showModal: !this.state.showModal })}
+              >
+                <Text>Delete</Text>
+              </Button>
+            </CardItem>
+            <ConfirmModal
+              visible={this.state.showModal}
+              onAccept={this.onAccept.bind(this)}
+              onDecline={this.onDecline.bind(this)}
+            >
+            Are you sure you want to delete this, schun?
+          </ConfirmModal>
+        </Card>
         </Content>
       </Container>
     );
@@ -64,4 +97,4 @@ const mapStateToProps = (state) => {
   return { name, breed, gender, age, phone, bio };
 };
 
-export default connect(mapStateToProps, { dogUpdate, dogSave })(EditDog);
+export default connect(mapStateToProps, { dogUpdate, dogSave, dogDelete })(EditDog);
