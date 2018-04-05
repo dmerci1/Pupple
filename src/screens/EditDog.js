@@ -18,7 +18,7 @@ class EditDog extends Component {
     });
   }
   onButtonPress() {
-    const { name, breed, gender, age, bio, phone, uid } = this.props;
+    const { name, breed, gender, age, bio, phone } = this.props;
     const navigationProps = this.props.navigation;
 
     this.props.dogSave({
@@ -28,7 +28,7 @@ class EditDog extends Component {
       age,
       bio,
       phone,
-      uid: this.props.navigation.state.params.uid,
+      uid: this.props.navigation.state.params.dog.uid,
       navigationProps
     });
   }

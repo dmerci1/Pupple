@@ -10,16 +10,17 @@ class DogList extends Component {
 
   constructor(props) {
   super(props);
-  this.renderRow = this.renderRow.bind(this);
+//  this.renderRow = this.renderRow.bind(this);
 }
   componentWillMount() {
     this.props.fetchDogs();
   }
 
-  renderRow({ item }) {
-    return (
-     <DogListItem dog={item} navigation={this.props.navigation} />
-   );
+  componentWillReceiveProps(nextProps) {
+
+  }
+  showDog(dog) {
+     this.props.navigation.navigate('editdog', { dog });
 }
 
   render() {
@@ -42,8 +43,16 @@ class DogList extends Component {
           <Content>
             <FlatList
               data={this.props.dogs}
-              renderItem={this.renderRow}
-              keyExtractor={dog => dog.uid}
+              renderItem={
+                ({ item }) => (
+                  <DogListItem
+                    dog={item}
+                    navigation={this.props.navigation}
+                    onRowPress={(dog) => this.showDog(dog)}
+                  />
+                )
+              }
+              keyExtractor={(item, index) => item.uid}
             />
             <Button
             block
