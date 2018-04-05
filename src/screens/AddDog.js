@@ -11,7 +11,8 @@ class AddDog extends Component {
   onButtonPress() {
     const { name, breed, gender, age, bio, phone } = this.props;
 
-    this.props.dogCreate({ name, breed, gender, age, bio, phone });
+    const navigationProps = this.props.navigation;
+    this.props.dogCreate({ name, breed, gender, age, bio, phone, navigationProps });
 }
   render() {
     return (

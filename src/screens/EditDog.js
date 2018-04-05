@@ -12,15 +12,25 @@ class EditDog extends Component {
   state= { showModal: false };
 
   componentWillMount() {
-    const { navigation, dogUpdate } = this.props;
-    _.each(navigation.state.params.dog, (value, prop) => {
+    //const { navigation, dogUpdate } = this.props;
+    _.each(this.props.navigation.state.params.dog, (value, prop) => {
       this.props.dogUpdate({ prop, value });
     });
   }
   onButtonPress() {
     const { name, breed, gender, age, bio, phone, uid } = this.props;
-    console.log(dogUpdate);
-    this.props.dogSave({ name, breed, gender, age, bio, phone, uid });
+    const navigationProps = this.props.navigation;
+
+    this.props.dogSave({
+      name,
+      breed,
+      gender,
+      age,
+      bio,
+      phone,
+      uid: this.props.navigation.state.params.uid,
+      navigationProps
+    });
   }
 
   onTextPress() {
@@ -32,7 +42,8 @@ class EditDog extends Component {
 onAccept() {
   const { uid } = this.props.navigation.state.params.dog;
 
-  this.props.dogDelete({ uid, navi: this.props.navigation });
+  const navigationProps = this.props.navigation;
+  this.props.dogDelete({ uid, navigationProps });
 }
 
 onDecline() {

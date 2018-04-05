@@ -15,7 +15,7 @@ export const dogUpdate = ({ prop, value }) => {
   };
 };
 
-export const dogCreate = ({ name, breed, gender, age, bio, phone }) => {
+export const dogCreate = ({ name, breed, gender, age, bio, phone, navigationProps }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
@@ -23,6 +23,7 @@ export const dogCreate = ({ name, breed, gender, age, bio, phone }) => {
     .push({ name, breed, gender, age, bio, phone })
     .then(() => {
       dispatch({ type: DOG_CREATE });
+      navigationProps.navigate('doglist');
   });
   };
 };
@@ -38,23 +39,29 @@ export const fetchDogs = () => {
   };
 };
 
-export const dogSave = ({ name, breed, gender, age, bio, phone, uid }) => {
+export const dogSave = ({ name, breed, gender, age, bio, phone, uid, navigationProps }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/dogs/${uid}`)
-    .set({ name, breed, gender, age, bio, phone });
-
-    dispatch({ type: DOG_SAVE_SUCCESS });
+    .set({ name, breed, gender, age, bio, phone })
+    .then(() => {
+      dispatch({ type: DOG_SAVE_SUCCESS });
+      navigationProps.navigate('doglist');
+  });
   };
 };
 
 
-export const dogDelete = ({ uid }) => {
+export const dogDelete = ({ uid, navigationProps }) => {
   const { currentUser } = firebase.auth();
 
-  return () => {
+  return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/dogs/${uid}`)
       .remove()
+      .then(() => {
+        dispatch({ type: DOG_SAVE_SUCCESS });
+        navigationProps.navigate('doglist');
+      });
   };
 };
