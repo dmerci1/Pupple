@@ -6,7 +6,7 @@ import Communications from 'react-native-communications';
 import { Container, Content, Header, Button, Left, Card, CardItem } from 'native-base';
 import DogForm from '../components/DogForm';
 import { ConfirmModal } from '../components/ConfirmModal';
-import { dogUpdate, dogSave, dogDelete } from '../actions';
+import { dogUpdate, dogSave, userDogSave, dogDelete, userDogDelete } from '../actions';
 
 class EditDog extends Component {
   state= { showModal: false };
@@ -31,7 +31,19 @@ class EditDog extends Component {
       uid: this.props.navigation.state.params.dog.uid,
       navigationProps
     });
-  }
+
+  this.props.userDogSave({
+    name,
+    breed,
+    gender,
+    age,
+    bio,
+    phone,
+    uid: this.props.navigation.state.params.dog.uid,
+    navigationProps
+  });
+}
+
 
   onTextPress() {
     const { phone, name } = this.props;
@@ -44,6 +56,7 @@ onAccept() {
 
   const navigationProps = this.props.navigation;
   this.props.dogDelete({ uid, navigationProps });
+  this.props.userDogDelete({ uid, navigationProps });
 }
 
 onDecline() {
@@ -108,4 +121,4 @@ const mapStateToProps = (state) => {
   return { name, breed, gender, age, phone, bio };
 };
 
-export default connect(mapStateToProps, { dogUpdate, dogSave, dogDelete })(EditDog);
+export default connect(mapStateToProps, { dogUpdate, dogSave, userDogSave, dogDelete, userDogDelete })(EditDog);

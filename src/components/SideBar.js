@@ -15,7 +15,7 @@ class SideBar extends Component {
         <Button
         full info large
         style={{ marginTop: 200, marginBottom: 15 }}
-        onPress={() => this.props.navigation.navigate('profile')}
+        onPress={() => this.props.navigation.navigate('shelterprofile')}
         >
         <Text>Profile</Text>
         </Button>

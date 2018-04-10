@@ -1,28 +1,24 @@
 import {
-  DOG_UPDATE,
-  DOG_CREATE,
-  USER_DOG_CREATE,
-  DOG_SAVE_SUCCESS
+  SHELTER_UPDATE,
+  SHELTER_CREATE,
+  SAVE_SHELTER_PROFILE_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
   name: '',
-  breed: '',
-  gender: '',
-  age: '',
-  bio: '',
-  phone: ''
+  phone: '',
+  email: '',
+  location: '',
+  bio: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case DOG_UPDATE:
+    case SHELTER_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
-    case DOG_CREATE:
+    case SHELTER_CREATE:
       return INITIAL_STATE;
-    case USER_DOG_CREATE:
-      return { ...state, INITIAL_STATE };
-    case DOG_SAVE_SUCCESS:
+    case SAVE_SHELTER_PROFILE_SUCCESS:
       return INITIAL_STATE;
     default:
       return state;

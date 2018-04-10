@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Container, Content, Header, Button, Left } from 'native-base';
 
-class Profile extends Component {
+class ShelterProfile extends Component {
   render() {
     return (
       <Container>
@@ -13,7 +13,7 @@ class Profile extends Component {
               block
               onPress={() => this.props.navigation.navigate('swipe')}
               >
-                <Text>Swipe Screen</Text>
+                <Text>Shelter Profile Screen</Text>
               </Button>
             </Left>
           </Header>
@@ -24,4 +24,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default ShelterProfile;

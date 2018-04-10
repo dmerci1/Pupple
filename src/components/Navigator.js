@@ -8,9 +8,10 @@ import { connect } from 'react-redux';
 import SignInForm from '../screens/SignInForm';
 import SignUpForm from '../screens/SignUpForm';
 import SwipeScreen from '../screens/SwipeScreen';
-import Profile from '../screens/Profile';
+import ShelterProfile from '../screens/ShelterProfile';
 import DogList from '../screens/DogList';
 import DogListItem from '../screens/DogListItem';
+import DogCard from '../screens/DogCard';
 import AddDog from '../screens/AddDog';
 import EditDog from '../screens/EditDog';
 import Settings from '../screens/Settings';
@@ -33,9 +34,10 @@ signUp: { screen: SignUpForm },
 
 const MenuNav = DrawerNavigator({
   swipe: { screen: SwipeScreen },
-  profile: { screen: Profile },
+  shelterprofile: { screen: ShelterProfile },
   doglist: { screen: DogList },
   doglistitem: { screen: DogListItem },
+  dogCard: { screen: DogCard },
   settings: { screen: Settings },
     editdog: { screen: EditDog }
 }, {

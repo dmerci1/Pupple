@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import { Text } from 'react-native';
 import { Container, Content, Body, Header, Form, Item, ListItem, CheckBox, Label, Input, Button, Left, Picker } from 'native-base';
 import { DogForm } from '../components/DogForm';
-import { dogUpdate, dogCreate } from '../actions';
+import { dogUpdate, dogCreate, userDogCreate } from '../actions';
 
 class AddDog extends Component {
 
@@ -12,6 +12,7 @@ class AddDog extends Component {
     const { name, breed, gender, age, bio, phone } = this.props;
 
     const navigationProps = this.props.navigation;
+    this.props.userDogCreate({ name, breed, gender, age: age || 1, bio, phone, navigationProps });
     this.props.dogCreate({ name, breed, gender, age, bio, phone, navigationProps });
 }
   render() {
@@ -97,4 +98,4 @@ const mapStateToProps = (state) => {
   return { name, breed, gender, age, bio, phone };
 };
 
-export default connect(mapStateToProps, { dogUpdate, dogCreate })(AddDog);
+export default connect(mapStateToProps, { dogUpdate, dogCreate, userDogCreate })(AddDog);

@@ -1,12 +1,25 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text,  View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { Text, FlatList } from 'react-native';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Drawer } from 'native-base';
-import NavigationService from '../components/NavigationService';
+import { fetchAllDogs } from '../actions';
+import DogCard from './DogCard';
 
 class SwipeScreen extends Component {
+  constructor(props) {
+  super(props);
+//  this.renderRow = this.renderRow.bind(this);
+}
   componentWillMount() {
+    this.props.fetchAllDogs();
     this.props.navigation.navigate('DrawerClose');
   }
+
+  componentWillReceiveProps(nextProps) {
+
+  }
+
   render() {
     return (
         <Container>
@@ -31,16 +44,31 @@ class SwipeScreen extends Component {
           </Header>
           <Content>
             <Text>Swipe Screen</Text>
-            <Button
-            block
-            onPress={() => this.props.navigation.navigate('newdog')}
-            >
-            <Text>Add Dog</Text>
-            </Button>
+            <FlatList
+              data={this.props.dogs}
+              renderItem={
+                ({ item }) => (
+                  <DogCard
+                    dog={item}
+                    //navigation={this.props.navigation}
+                    //onRowPress={(dog) => this.showDog(dog)}
+                  />
+                )
+              }
+              keyExtractor={(item, index) => item.uid}
+            />
           </Content>
         </Container>
     );
   }
 }
 
-export default SwipeScreen;
+const mapStateToProps = state => {
+  const dogs = _.map(state.dogs, (val, uid) => {
+    return { ...val, uid };
+  });
+
+  return { dogs };
+};
+
+export default connect(mapStateToProps, { fetchAllDogs })(SwipeScreen);
